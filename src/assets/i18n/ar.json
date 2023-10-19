@@ -1,0 +1,13 @@
+{
+    "dir": "rtl",
+    "language": "English",
+    "header": {
+        "final": "فاينال",
+        "new-test": "أختبار جديد",
+        "student": "الطلاب",
+        "subjects": "المواد",
+        "logout": "خروج",
+        "login": "دخول",
+        "register": "تسجيل"
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "student": [
+        {
+            "userName": "mohamed",
+            "email": "mail@text.com",
+            "password": "1234",
+            "id": 1
+        },
+        {
+            "userName": "eeee",
+            "email": "test@test.com",
+            "password": "1234",
+            "id": 2
+        },
+        {
+            "userName": "eeee",
+            "email": "test1@test.com",
+            "password": "1234",
+            "id": 3
+        }
+    ],
+    "doctor": [],
+    "login": []
+}

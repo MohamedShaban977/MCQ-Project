@@ -1,0 +1,13 @@
+{
+    "dir": "ltr",
+    "language": "عربى",
+    "header": {
+        "final": "Final",
+        "new-test": "New Test",
+        "student": "Student",
+        "subjects": "Subjects",
+        "logout": "Logout",
+        "login": "Login",
+        "register": "Register"
+    }
+}
