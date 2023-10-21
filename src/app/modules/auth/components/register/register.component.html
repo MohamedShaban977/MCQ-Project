@@ -2,26 +2,29 @@
     <div class="text-center registhead">
         <h2>Register</h2>
     </div>
-    <form class="form-group" [formGroup]="registerService.formGroup">
+    <form class="form-group" [formGroup]="myFormGroup">
         <div class="row">
 
             <!-- userName -->
             <div class="col-md-6 col-sm-12">
                 <div class="form-group mb-3">
                     <label for="name" class="form-label">User Name</label>
-                    <input formControlName="userName" type="text" class="form-control" id="name"
+                    <input formControlName="userNameCon" type="text" class="form-control" id="name"
                         placeholder="Enter Your Name" [ngClass]="{
-                        'is-valid':registerService.userName?.valid && registerService.userName?.dirty,
-                        'is-invalid':registerService.userName?.invalid && registerService.userName?.touched
+                        'is-valid':userNameCon.valid && userNameCon.dirty,
+                        'is-invalid':userNameCon.invalid && userNameCon.dirty
                     }">
-                    <small class="form-text text-danger"
-                        *ngIf="registerService.userName?.invalid && registerService.userName?.touched">name is
-                        required</small>
+
+                    <ng-container *ngIf="userNameCon.invalid && userNameCon.touched && userNameCon.dirty">
+                        <small class="form-text text-danger">{{validUserName()}}</small>
+                    </ng-container>
+
+
                 </div>
             </div>
-
+            <br>
             <!-- Email -->
-            <div class="col-md-6 col-sm-12">
+            <!-- <div class="col-md-6 col-sm-12">
                 <div class="form-group mb-3">
                     <label for="email" class="form-label">Email address</label>
                     <input formControlName="email" type="email" class="form-control" id="email"
@@ -33,37 +36,53 @@
                         *ngIf="registerService.email?.invalid &&registerService.email?.touched">name is
                         required</small>
                 </div>
-            </div>
+            </div> -->
 
-            <!-- Password -->
             <div class="col-md-6 col-sm-12">
                 <div class="form-group mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input formControlName="password" type="password" class="form-control" id="password"
-                        placeholder="Enter Your Password" [ngClass]="{
-                        'is-valid':registerService.password?.valid && registerService.password?.dirty,
-                        'is-invalid':registerService.password?.invalid && registerService.password?.touched
-                    }">
-                    <small class="form-text text-danger"
-                        *ngIf="registerService.password?.invalid && registerService.password?.touched">name is
-                        required</small>
+                    <input [type]="type" class="form-control" placeholder="Enter Your Password" />
+                    <span (click)="hideShowPass()"> <i class="fa-regular {{eyeIcon}}"></i></span>
+                    <!-- <small class="form-text text-danger"
+                        *ngIf="passwordCon.invalid && passwordCon.touched">{{validPassword()}}</small> -->
                 </div>
             </div>
 
-            <!-- Confirm Password -->
-            <div class="col-md-6 col-sm-12">
-                <div class=" form-group mb-3">
-                    <label for="confirmPassword" class="form-label">Confirm Password</label>
-                    <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword"
-                        placeholder="Enter Your Confirm Password" [ngClass]="{
-                            'is-valid':registerService.confirmPassword?.valid && registerService.confirmPassword?.dirty,
-                            'is-invalid':registerService.confirmPassword?.invalid && registerService.confirmPassword?.touched
-                        }">
-                    <small class="form-text text-danger"
-                        *ngIf="registerService.confirmPassword?.invalid && registerService.confirmPassword?.touched">name
-                        is
-                        required</small>
+
+            <div formGroupName="passwordG">
+                <!-- Password -->
+                <div class="col-md-6 col-sm-12">
+                    <div class="input-field form-group mb-3">
+                        <label for="password" class="form-label">Password</label>
+
+                        <input formControlName="passwordCon" [type]="type" class="form-control" id="password"
+                            placeholder="Enter Your Password" [ngClass]="{
+                        'is-valid':passwordCon.valid && passwordCon.dirty,
+                        'is-invalid':passwordCon.invalid && passwordCon.touched
+                    }" />
+                        <!-- <i class="fa-regular fa-eye" id="togglePassword"></i> -->
+                        <span (click)="hideShowPass()"> <i class="fa-regular {{eyeIcon}}"></i> </span>
+
+
+                        <small class="form-text text-danger"
+                            *ngIf="passwordCon.invalid && passwordCon.touched">{{validPassword()}}</small>
+                    </div>
                 </div>
+
+                <!-- Confirm Password -->
+                <div class="col-md-6 col-sm-12">
+                    <div class=" form-group mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input formControlName="confirmPasswordCon" type="password" class="form-control"
+                            id="confirmPassword" placeholder="Enter Your Confirm Password" [ngClass]="{
+                            'is-valid':confirmPasswordCon.valid && confirmPasswordCon.dirty,
+                            'is-invalid':confirmPasswordCon.invalid && confirmPasswordCon.touched
+                        }">
+                        <small class="form-text text-danger"
+                            *ngIf="confirmPasswordCon.invalid && confirmPasswordCon.touched">{{validConfirmPassword()}}</small>
+                    </div>
+                </div>
+                confirmPasswordCon {{passwordFG.errors |json}}
 
             </div>
         </div>
@@ -71,17 +90,16 @@
 
         <div class="text-right registfoot">
             <a routerLink="/login" color="primary" class="btn btn-link">املك حساب بالفعل ؟</a>
-            <button
-                [disabled]="registerService.formGroup.invalid || (registerService.formGroup.value.password !==  registerService.formGroup.value.confirmPassword)"
-                class="btn btn-primary d-flex justify-content-center align-items-center  py-1 mx-auto"
-                (click)="submit()">
-                <div class="spinner-border text-light col-12 mx-auto " *ngIf="isLoading" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                <span *ngIf="!isLoading">انشاء الحساب</span>
-            </button>
 
-            <!-- <button class="btn btn-primary" color="warn" type="submit">انشاء الحساب</button> -->
+
+            <!-- <div class="text-center">
+                <app-button-loading [isLoading]="isLoading"
+                    [isDisabled]="registerService.formGroup.invalid || (registerService.formGroup.value.password !==  registerService.formGroup.value.confirmPassword)"
+                    (onSubmit)="submit()">
+
+                </app-button-loading>
+            </div> -->
+            <button class="btn btn-primary" color="warn" type="submit">انشاء الحساب</button>
         </div>
     </form>
 </div>

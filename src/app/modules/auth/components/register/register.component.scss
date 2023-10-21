@@ -28,11 +28,13 @@
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        button {
-            margin-top: 15px;
-            padding: 0px 30px;
-            font-size: 18px;
-        }
+        
+        // button {
+        //     margin-top: 15px;
+        //     padding: 0px 30px;
+        //     font-size: 18px;
+        //     transition: all 0.3s ease-in;
+        // }
     }
 }
 a {

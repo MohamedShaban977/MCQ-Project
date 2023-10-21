@@ -11,6 +11,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+
     AppRoutingModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
@@ -29,9 +32,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     }),
 
     ToastrModule.forRoot(),
-    AuthModule,
-    DoctorModule,
     SharedModule,
+    DoctorModule,
+
     StudentModule
   ],
   providers: [],

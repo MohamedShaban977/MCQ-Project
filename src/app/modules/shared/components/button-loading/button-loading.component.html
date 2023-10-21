@@ -1,0 +1,10 @@
+<button [disabled]="isDisabled || isLoading" [@isLoading]="isLoading?'loadingState':'normalState'"
+    class="btn btn-primary d-flex justify-content-center align-items-center  mx-auto" (click)="submit($event)">
+
+    <div class="spinner-border spinner-border-sm text-light" *ngIf="isLoading" role="status">
+
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    <span *ngIf="!isLoading "> {{title}}</span>
+</button>

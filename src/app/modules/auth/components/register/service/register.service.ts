@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../service/auth.service';
 import { Router } from '@angular/router';
 import { UserStudentModel } from 'src/app/models/register-model';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 @Injectable({
   providedIn: 'root',
@@ -18,12 +19,33 @@ export class RegisterService {
   ) { }
 
   formGroup!: FormGroup;
+
+
+
   allUsers!: UserStudentModel[];
-  isLoading: boolean = false
+  private isLoadingSubject = new BehaviorSubject<boolean>(false);
+
+  private setIsLoading(value: boolean) {
+    this.isLoadingSubject.next(value);
+  }
+
+
+
+  getIsLoading() {
+    return this.isLoadingSubject.asObservable();
+  }
 
   createForm() {
+    // this.myFormGroup = new FormGroup({
+    //   userNameCon: this.userNameCon,
+    //   emailCon: this.emailCon,
+    //   passwordCon: this.passwordCon,
+    //   confirmPasswordCon: this.confirmPasswordCon,
+    // });
+
+
     this.formGroup = this.fb.group({
-      userName: ['', [Validators.required, Validators.maxLength(3)]],
+      userName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
@@ -35,6 +57,7 @@ export class RegisterService {
   get email() { return this.formGroup.get('email'); }
   get password() { return this.formGroup.get('password'); }
   get confirmPassword() { return this.formGroup.get('confirmPassword'); }
+
   getControlByName(controlName: string) { return this.formGroup.get(controlName) }
 
 
@@ -49,22 +72,28 @@ export class RegisterService {
 
 
   submit(model: UserStudentModel) {
-    this.isLoading = true;
+    this.setIsLoading(true);
+
     let index: number = this.allUsers.findIndex(item => item.email === this.formGroup.value.email)
-    if (index !== -1) {
-      this.toaster.error('Email already exists');
-      this.isLoading = false;
-    }
-    else {
-      this.service.createUserStudent(model).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.toaster.success('User add been successfully');
-          this.router.navigate(['/login']);
-          this.isLoading = false;
-        }
-      })
-    }
+
+    setTimeout(() => {
+      if (index !== -1) {
+        this.toaster.error('Email already exists');
+        this.setIsLoading(false);
+      }
+      else {
+        this.service.createUserStudent(model).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.toaster.success('User add been successfully');
+            this.router.navigate(['/login']);
+            this.setIsLoading(false);
+          }
+        })
+      }
+    }, 5000);
+
+
   }
 
 

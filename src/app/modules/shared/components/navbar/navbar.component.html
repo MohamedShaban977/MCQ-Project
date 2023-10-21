@@ -13,9 +13,9 @@
                 <li routerLinkActive="active"><a routerLink="/new-exam">{{'header.new-test' | translate}}</a></li>
                 <li routerLinkActive="active"><a routerLink="/students">{{'header.student' | translate}}</a></li>
                 <li routerLinkActive="active"><a routerLink="/subjects">{{'header.subjects' | translate}} </a></li>
-                <li routerLinkActive="active"><a routerLink="/login">{{'header.logout' | translate}}</a></li>
-                <li routerLinkActive="active"><a routerLink="/login">{{'header.login' | translate}}</a></li>
-                <li routerLinkActive="active"><a routerLink="/register">{{'header.register' | translate}}</a></li>
+                <li routerLinkActive="active"><a routerLink="auth/login">{{'header.logout' | translate}}</a></li>
+                <li routerLinkActive="active"><a routerLink="auth/login">{{'header.login' | translate}}</a></li>
+                <li routerLinkActive="active"><a routerLink="auth/register">{{'header.register' | translate}}</a></li>
                 <li class="username">Mohamed</li>
             </ul>
             <button (click)="changeCurrentLanguage()" type="button" class="btn btn-light "

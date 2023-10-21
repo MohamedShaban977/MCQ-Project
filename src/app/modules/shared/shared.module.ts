@@ -7,21 +7,23 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ButtonLoadingComponent } from './components/button-loading/button-loading.component';
 
 
 
 @NgModule({
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    ButtonLoadingComponent
   ],
   imports: [
-    ReactiveFormsModule,
     CommonModule,
+    ReactiveFormsModule,
     TranslateModule,
     HttpClientModule,
     RouterModule,
-    BrowserModule,
-    BrowserAnimationsModule,
+
+
 
 
   ],
@@ -31,10 +33,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
 
     RouterModule,
-    BrowserModule,
-    BrowserAnimationsModule,
 
-    NavbarComponent
+
+    NavbarComponent,
+    ButtonLoadingComponent,
+
   ]
 })
 export class SharedModule { }
