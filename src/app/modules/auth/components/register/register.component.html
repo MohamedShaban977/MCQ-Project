@@ -12,94 +12,99 @@
                     <input formControlName="userNameCon" type="text" class="form-control" id="name"
                         placeholder="Enter Your Name" [ngClass]="{
                         'is-valid':userNameCon.valid && userNameCon.dirty,
-                        'is-invalid':userNameCon.invalid && userNameCon.dirty
+                        'is-invalid':userNameCon.invalid && userNameCon.touched
                     }">
 
-                    <ng-container *ngIf="userNameCon.invalid && userNameCon.touched && userNameCon.dirty">
+                    <ng-container *ngIf="userNameCon.invalid && userNameCon.touched ">
                         <small class="form-text text-danger">{{validUserName()}}</small>
                     </ng-container>
 
 
                 </div>
             </div>
+
             <br>
             <!-- Email -->
-            <!-- <div class="col-md-6 col-sm-12">
-                <div class="form-group mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input formControlName="email" type="email" class="form-control" id="email"
-                        placeholder="Enter Your Email" [ngClass]="{
-                        'is-valid':registerService.email?.valid &&registerService.email?.dirty,
-                        'is-invalid':registerService.email?.invalid &&registerService.email?.touched
-                    }">
-                    <small class="form-text text-danger"
-                        *ngIf="registerService.email?.invalid &&registerService.email?.touched">name is
-                        required</small>
-                </div>
-            </div> -->
-
             <div class="col-md-6 col-sm-12">
                 <div class="form-group mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input [type]="type" class="form-control" placeholder="Enter Your Password" />
-                    <span (click)="hideShowPass()"> <i class="fa-regular {{eyeIcon}}"></i></span>
-                    <!-- <small class="form-text text-danger"
-                        *ngIf="passwordCon.invalid && passwordCon.touched">{{validPassword()}}</small> -->
+
+
+                    <label for="email" class="form-label">Email address</label>
+                    <span class="form-message form-message--error" *ngIf="emailCon.invalid  && emailCon.dirty">{{
+                        validUserEmailAsync()}}</span>
+                    <span class="form-message form-message--success" *ngIf="emailCon.valid && !emailCon.pending">Email
+                        is not used</span>
+
+                    <div class="form-control-normal">
+                        <input formControlName="emailCon" type="email" class="form-control" id="email"
+                            placeholder="Enter Your Email" [ngClass]="{
+                        'is-valid':emailCon.valid &&emailCon.dirty,
+                        'is-invalid':emailCon.invalid &&emailCon.touched
+                    }">
+                        <span class="form-control--loading" *ngIf="emailCon.pending "></span>
+
+                    </div>
+                    <small class="form-text text-danger"
+                        *ngIf="emailCon?.invalid &&emailCon?.touched">{{validUserEmail()}}</small>
                 </div>
             </div>
 
 
-            <div formGroupName="passwordG">
-                <!-- Password -->
-                <div class="col-md-6 col-sm-12">
-                    <div class="input-field form-group mb-3">
-                        <label for="password" class="form-label">Password</label>
-
-                        <input formControlName="passwordCon" [type]="type" class="form-control" id="password"
-                            placeholder="Enter Your Password" [ngClass]="{
-                        'is-valid':passwordCon.valid && passwordCon.dirty,
-                        'is-invalid':passwordCon.invalid && passwordCon.touched
-                    }" />
-                        <!-- <i class="fa-regular fa-eye" id="togglePassword"></i> -->
-                        <span (click)="hideShowPass()"> <i class="fa-regular {{eyeIcon}}"></i> </span>
-
-
-                        <small class="form-text text-danger"
-                            *ngIf="passwordCon.invalid && passwordCon.touched">{{validPassword()}}</small>
-                    </div>
+            <!-- Password -->
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group form-group-password  mb-3">
+                    <label for="password" class="form-label">Passwordsssss</label>
+                    <input [type]="visiblePassword?'text':'password'" id="password" class="form-control"
+                        placeholder="Enter Your Password" formControlName="passwordCon" [ngClass]="{
+                                'is-valid':passwordCon.valid && passwordCon.dirty,
+                                'is-invalid':passwordCon.invalid && passwordCon.touched
+                            }" />
+                    <span class="eyeIcon" (click)="showPass()" *ngIf="!visiblePassword">
+                        <i class="fa fa-eye "></i>
+                    </span>
+                    <span class="eyeIcon " (click)="showPass()" *ngIf="visiblePassword">
+                        <i class="fa fa-eye-slash "></i>
+                    </span>
+                    <small class="form-text text-danger"
+                        *ngIf="passwordCon.invalid && passwordCon.touched">{{validPassword()}}</small>
                 </div>
 
-                <!-- Confirm Password -->
-                <div class="col-md-6 col-sm-12">
-                    <div class=" form-group mb-3">
-                        <label for="confirmPassword" class="form-label">Confirm Password</label>
-                        <input formControlName="confirmPasswordCon" type="password" class="form-control"
-                            id="confirmPassword" placeholder="Enter Your Confirm Password" [ngClass]="{
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="col-md-6 col-sm-12">
+                <div class=" form-group form-group-password mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input formControlName="confirmPasswordCon" [type]="visibleConfirmPassword?'text':'password'"
+                        class="form-control" id="confirmPassword" placeholder="Enter Your Confirm Password" [ngClass]="{
                             'is-valid':confirmPasswordCon.valid && confirmPasswordCon.dirty,
                             'is-invalid':confirmPasswordCon.invalid && confirmPasswordCon.touched
                         }">
-                        <small class="form-text text-danger"
-                            *ngIf="confirmPasswordCon.invalid && confirmPasswordCon.touched">{{validConfirmPassword()}}</small>
-                    </div>
+                    <span class="eyeIcon" (click)="showConfirmPass()" *ngIf="!visibleConfirmPassword">
+                        <i class="fa fa-eye "></i>
+                    </span>
+                    <span class="eyeIcon " (click)="showConfirmPass()" *ngIf="visibleConfirmPassword">
+                        <i class="fa fa-eye-slash "></i>
+                    </span>
+                    <small class="form-text text-danger"
+                        *ngIf="confirmPasswordCon.invalid && confirmPasswordCon.touched">{{validConfirmPassword()}}</small>
                 </div>
-                confirmPasswordCon {{passwordFG.errors |json}}
-
             </div>
         </div>
 
 
-        <div class="text-right registfoot">
+
+        <div class="text-right registfoot mt-4">
             <a routerLink="/login" color="primary" class="btn btn-link">املك حساب بالفعل ؟</a>
 
 
-            <!-- <div class="text-center">
-                <app-button-loading [isLoading]="isLoading"
-                    [isDisabled]="registerService.formGroup.invalid || (registerService.formGroup.value.password !==  registerService.formGroup.value.confirmPassword)"
-                    (onSubmit)="submit()">
+            <div class="text-center">
+                <app-button-loading [isLoading]="isLoading" [isDisabled]="myFormGroup.invalid" (onSubmit)="submit()"
+                    title="انشاء الحساب">
 
                 </app-button-loading>
-            </div> -->
-            <button class="btn btn-primary" color="warn" type="submit">انشاء الحساب</button>
+            </div>
+            <!-- <button class="btn btn-primary" color="warn" type="submit">انشاء الحساب</button> -->
         </div>
     </form>
 </div>

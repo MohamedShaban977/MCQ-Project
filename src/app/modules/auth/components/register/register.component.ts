@@ -5,24 +5,23 @@ import { RegisterService } from './service/register.service';
 import { ToggleIsLoading } from 'src/app/modules/shared/animations/toggle-isLoading';
 import { AbstractControlOptions, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidateConfirmPassword, ValidateName, ValidatePassword, ValidateUserName } from 'src/app/core/validations/validations';
+import { emailValidator } from 'src/app/core/validations/async-validations';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  animations: [ToggleIsLoading]
+  // animations: [ToggleIsLoading]
 })
 export class RegisterComponent {
-  isLoading: boolean = false;
-  eyeIcon: string = 'fa-eye-slash';
 
-  type: string = 'password';
-  isText: boolean = false;
+  isLoading: boolean = false;
+  visiblePassword: boolean = false;
+  visibleConfirmPassword: boolean = false;
 
 
   myFormGroup!: FormGroup;
 
-  passwordFG!: FormGroup;
   userNameCon!: FormControl;
   emailCon!: FormControl;
   passwordCon!: FormControl;
@@ -32,16 +31,13 @@ export class RegisterComponent {
 
 
   constructor(public registerService: RegisterService) {
-    // this.registerService.getIsLoading().subscribe((isLoading: boolean) => {
-    //   this.isLoading = isLoading;
-    //   console.log(this.isLoading);
+
+    this.registerService.getIsLoading().subscribe((isLoading: boolean) => {
+      this.isLoading = isLoading;
+      console.log(this.isLoading);
 
 
-    // })
-
-    this.initFormControl();
-    this.createForm()
-
+    })
 
 
 
@@ -50,34 +46,43 @@ export class RegisterComponent {
   ngOnInit(): void {
     this.registerService.getAllUserStudent()
 
-    // this.registerService.createForm()
+    this.initFormControl();
+    this.createForm()
+
   }
-  // <i class="fa-regular fa-eye-slash"></i>
-  hideShowPass() {
-    this.isText = !this.isText
-    this.isText ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash";
-    this.isText ? this.type = "text" : this.type = "password"
+
+  showPass() {
+    this.visiblePassword = !this.visiblePassword;
+
   }
+  showConfirmPass() {
+    this.visibleConfirmPassword = !this.visibleConfirmPassword;
+
+  }
+
+
 
   initFormControl() {
     this.userNameCon = new FormControl('', [Validators.required, ValidateName, ValidateUserName(/[A-Z]/g)]);
-    this.emailCon = new FormControl('');
+    this.emailCon = new FormControl(
+      '',
+      {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [emailValidator()],
+        updateOn: 'blur'
+
+      }
+    );
     this.passwordCon = new FormControl('', [Validators.required, ValidatePassword]);
     this.confirmPasswordCon = new FormControl('', [Validators.required, Validators.minLength(6), ValidateConfirmPassword(this.passwordCon)]);
   }
 
   createForm() {
-    this.passwordFG = new FormGroup({
-      passwordCon: this.passwordCon,
-      confirmPasswordCon: this.confirmPasswordCon,
-
-    },
-    )
-
     this.myFormGroup = new FormGroup({
       userNameCon: this.userNameCon,
       emailCon: this.emailCon,
-      passwordG: this.passwordFG,
+      passwordCon: this.passwordCon,
+      confirmPasswordCon: this.confirmPasswordCon,
     },);
 
 
@@ -101,6 +106,32 @@ export class RegisterComponent {
     }
     return null
   }
+
+  validUserEmail(): string | null {
+
+
+    if (this.emailCon.errors?.['required']) {
+
+      return 'Email is required';
+    }
+
+    else if (this.emailCon.errors?.['email']) {
+      return 'Email is correct';
+    }
+    return null
+  }
+
+  validUserEmailAsync(): string | null {
+
+
+    if (this.emailCon.errors?.['userNameExist']) {
+
+      return 'Email is already exists';
+    }
+    return '';
+  }
+
+
 
   validPassword(): string | null {
     if (this.passwordCon.errors?.['required']) {
@@ -140,9 +171,9 @@ export class RegisterComponent {
     console.log('rrrrrrrrrrr');
 
     this.registerModel = {
-      userName: this.registerService.userName?.value,
-      email: this.registerService.email?.value,
-      password: this.registerService.password?.value,
+      userName: this.userNameCon?.value,
+      email: this.emailCon?.value,
+      password: this.passwordCon?.value,
     }
 
     this.registerService.submit(this.registerModel);

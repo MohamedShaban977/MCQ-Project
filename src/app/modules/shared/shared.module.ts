@@ -8,13 +8,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonLoadingComponent } from './components/button-loading/button-loading.component';
+import { InputPasswordComponent } from './components/input-password/input-password.component';
 
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    ButtonLoadingComponent
+    ButtonLoadingComponent,
+    InputPasswordComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,8 @@ import { ButtonLoadingComponent } from './components/button-loading/button-loadi
 
     NavbarComponent,
     ButtonLoadingComponent,
+    InputPasswordComponent,
+
 
   ]
 })

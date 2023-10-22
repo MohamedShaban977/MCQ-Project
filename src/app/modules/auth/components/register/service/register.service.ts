@@ -12,7 +12,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 export class RegisterService {
 
 
-  constructor(private fb: FormBuilder,
+  constructor(
     private toaster: ToastrService,
     private service: AuthService,
     private router: Router,
@@ -35,30 +35,9 @@ export class RegisterService {
     return this.isLoadingSubject.asObservable();
   }
 
-  createForm() {
-    // this.myFormGroup = new FormGroup({
-    //   userNameCon: this.userNameCon,
-    //   emailCon: this.emailCon,
-    //   passwordCon: this.passwordCon,
-    //   confirmPasswordCon: this.confirmPasswordCon,
-    // });
 
 
-    this.formGroup = this.fb.group({
-      userName: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
-    });
-  }
 
-
-  get userName() { return this.formGroup.get('userName'); }
-  get email() { return this.formGroup.get('email'); }
-  get password() { return this.formGroup.get('password'); }
-  get confirmPassword() { return this.formGroup.get('confirmPassword'); }
-
-  getControlByName(controlName: string) { return this.formGroup.get(controlName) }
 
 
   getAllUserStudent() {
@@ -74,23 +53,23 @@ export class RegisterService {
   submit(model: UserStudentModel) {
     this.setIsLoading(true);
 
-    let index: number = this.allUsers.findIndex(item => item.email === this.formGroup.value.email)
+    // let index: number = this.allUsers.findIndex(item => item.email === this.formGroup.value.email)
 
     setTimeout(() => {
-      if (index !== -1) {
-        this.toaster.error('Email already exists');
-        this.setIsLoading(false);
-      }
-      else {
-        this.service.createUserStudent(model).subscribe({
-          next: (res) => {
-            console.log(res);
-            this.toaster.success('User add been successfully');
-            this.router.navigate(['/login']);
-            this.setIsLoading(false);
-          }
-        })
-      }
+      //   if (index !== -1) {
+      //     this.toaster.error('Email already exists');
+      //     this.setIsLoading(false);
+      //   }
+      //   else {
+      this.service.createUserStudent(model).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.toaster.success('User add been successfully');
+          this.router.navigate(['/login']);
+          this.setIsLoading(false);
+        }
+      })
+      // }
     }, 5000);
 
 

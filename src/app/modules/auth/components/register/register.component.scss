@@ -28,7 +28,7 @@
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        
+
         // button {
         //     margin-top: 15px;
         //     padding: 0px 30px;
@@ -46,4 +46,90 @@ a {
     color: #fff;
     margin-top: 15px;
     font-size: 18px;
+}
+
+.form-message {
+}
+
+::ng-deep[dir="rtl"] {
+    .form-group-password {
+        position: relative;
+
+        width: 100%;
+        input {
+            border-radius: 0 8px 8px 0;
+            width: 90%;
+        }
+
+        .eyeIcon {
+            width: 10%;
+            position: absolute;
+            left: 0;
+            top: 32px;
+            font-size: 16px;
+            background-color: #ddd;
+            border-radius: 8px 0 0 8px;
+            padding: 7px 10px 7px 10px;
+            cursor: pointer;
+        }
+    }
+}
+
+::ng-deep[dir="ltr"] {
+    .form-group-password {
+        position: relative;
+
+        width: 100%;
+        input {
+            border-radius: 8px 0 0 8px;
+            width: 87%;
+        }
+
+        .eyeIcon {
+            width: 13%;
+            position: absolute;
+            right: 0;
+            top: 32px;
+            font-size: 16px;
+            background-color: #ddd;
+            border-radius: 0 8px 8px 0;
+            padding: 7px 10px;
+            cursor: pointer;
+        }
+    }
+}
+
+.form-message {
+    font-size: 12px;
+    font-weight: 100;
+    margin-inline-start: 10px;
+    &--error {
+        color: red;
+    }
+
+    &--success {
+        color: green;
+    }
+}
+
+.form-control-normal {
+    position: relative;
+    .form-control--loading {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 15px;
+        height: 15px;
+        border: 2px solid #dbdbdb;
+        border-radius: 50%;
+        border-right-color: transparent;
+        border-top-color: transparent;
+        animation: 0.5s linear infinite spin;
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
 }

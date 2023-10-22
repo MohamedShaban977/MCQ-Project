@@ -11,6 +11,12 @@
       "email": "test1@test.com",
       "password": "1234",
       "id": 2
+    },
+    {
+      "userName": "mohamed",
+      "email": "test@tesr.com",
+      "password": "P@55w0rd",
+      "id": 3
     }
   ],
   "doctor": [],
