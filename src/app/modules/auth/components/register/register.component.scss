@@ -18,12 +18,12 @@
             color: #fff;
         }
     }
-    mat-form-field {
-        width: 100%;
-    }
-    mat-radio-button {
-        margin-right: 30px;
-    }
+    // mat-form-field {
+    //     width: 100%;
+    // }
+    // mat-radio-button {
+    //     margin-right: 30px;
+    // }
     .registfoot {
         display: flex;
         justify-content: space-between;
@@ -58,18 +58,21 @@ a {
         width: 100%;
         input {
             border-radius: 0 8px 8px 0;
-            width: 90%;
+            width: 87%;
         }
 
         .eyeIcon {
-            width: 10%;
+            width: 13%;
+            height: 100%;
             position: absolute;
             left: 0;
-            top: 32px;
+            top: 0;
             font-size: 16px;
             background-color: #ddd;
             border-radius: 8px 0 0 8px;
-            padding: 7px 10px 7px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
         }
     }
@@ -87,13 +90,16 @@ a {
 
         .eyeIcon {
             width: 13%;
+            height: 100%;
             position: absolute;
             right: 0;
-            top: 32px;
+            top: 0;
             font-size: 16px;
             background-color: #ddd;
             border-radius: 0 8px 8px 0;
-            padding: 7px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
         }
     }

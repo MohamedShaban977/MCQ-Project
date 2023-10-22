@@ -1,25 +1,21 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../service/auth.service';
 import { Router } from '@angular/router';
 import { UserStudentModel } from 'src/app/models/register-model';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { UserTypeEnum } from 'src/app/core/enums/user-type-enum';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class RegisterService {
-
+export class LoginService {
 
   constructor(
     private toaster: ToastrService,
     private service: AuthService,
     private router: Router,
   ) { }
-
-
 
 
   allUsers!: UserStudentModel[];
@@ -36,38 +32,16 @@ export class RegisterService {
   }
 
 
-
-
-
-
-  getAllUserStudent() {
-    this.service.getAllUsersStudent().subscribe({
-      next: (res) => {
-        this.allUsers = res;
-        console.log(this.allUsers);
-      }
-    })
-  }
-
-  getAllUsers() {
+  getAllUsers(userType: UserTypeEnum) {
     console.log('getAllUsers');
 
-    this.service.getAllUsers(UserTypeEnum.student).subscribe({
-      next: (res) => {
-        this.allUsers = res;
-        console.log(this.allUsers);
-      }
-    })
-
-    this.service.getAllUsers(UserTypeEnum.doctor).subscribe({
+    this.service.getAllUsers(userType).subscribe({
       next: (res) => {
         this.allUsers = res;
         console.log(this.allUsers);
       }
     })
   }
-
-
 
   submit(model: UserStudentModel) {
     this.setIsLoading(true);
@@ -94,6 +68,7 @@ export class RegisterService {
 
   }
 
-
 }
+
+
 

@@ -10,17 +10,23 @@
         <div class="d-flex align-items-center">
             <ul class="nav  navbar-default d-flex align-items-center "
                 [ngClass]="{ 'navbar-right':  ('dir'| translate)=='rtl'}">
-                <li routerLinkActive="active"><a routerLink="/new-exam">{{'header.new-test' | translate}}</a></li>
-                <li routerLinkActive="active"><a routerLink="/students">{{'header.student' | translate}}</a></li>
-                <li routerLinkActive="active"><a routerLink="/subjects">{{'header.subjects' | translate}} </a></li>
-                <li routerLinkActive="active"><a routerLink="auth/login">{{'header.logout' | translate}}</a></li>
-                <li routerLinkActive="active"><a routerLink="auth/login">{{'header.login' | translate}}</a></li>
-                <li routerLinkActive="active"><a routerLink="auth/register">{{'header.register' | translate}}</a></li>
-                <li class="username">Mohamed</li>
+                <li *ngIf="userData?.role == 'doctor'" routerLinkActive="active"><a
+                        routerLink="/new-exam">{{'header.new-test' | translate}}</a></li>
+                <li *ngIf="userData?.role == 'doctor'" routerLinkActive="active"><a
+                        routerLink="/students">{{'header.student' | translate}}</a></li>
+                <li *ngIf="userData !== null" routerLinkActive="active"><a
+                        routerLink="subject/subjects">{{'header.subjects' |
+                        translate}} </a></li>
+                <li *ngIf="userData !== null" routerLinkActive="active" (click)="logout()"><a
+                        routerLink="auth/login">{{'header.logout' | translate}}</a></li>
+                <li *ngIf="userData == null" routerLinkActive="active"><a routerLink="auth/login">{{'header.login' |
+                        translate}}</a></li>
+                <li *ngIf="userData == null" routerLinkActive="active"><a
+                        routerLink="auth/register">{{'header.register'| translate}}</a></li>
+                <li *ngIf="userData !== null" class="username">{{userData?.userName}}</li>
             </ul>
             <button (click)="changeCurrentLanguage()" type="button" class="btn btn-light "
                 [ngClass]="{ 'ms-4':  ('dir'| translate)=='ltr'}">
-
                 {{'language'| translate}}</button>
 
         </div><!-- /.navbar-collapse -->

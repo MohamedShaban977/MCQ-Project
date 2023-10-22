@@ -1,1 +1,72 @@
-<p>login works!</p>
+<div class="login">
+    <div class="text-center loginhead">
+        <h2>Login</h2>
+    </div>
+    <form class="form-group" [formGroup]="loginFormGroup">
+        <div class="row">
+
+            <div class="col-sm-12 mb-3">
+
+                <div class="form-group">
+                    <div class="form-check form-check-inline">
+                        <input (change)="getRoleUser($event)" class="form-check-input" type="radio" value="student"
+                            name="userType" id="studentCheck" checked>
+                        <label class="form-check-label" for="studentCheck">Student</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input (change)="getRoleUser($event)" class="form-check-input" type="radio" value="doctor"
+                            name="userType" id="doctorCheck">
+                        <label class="form-check-label" for="doctorCheck">Doctor</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <div class="form-control-normal">
+                        <input formControlName="emailCon" type="email" class="form-control" id="email"
+                            placeholder="Enter Your Email" [ngClass]="{
+                                'is-valid':emailCon.valid &&emailCon.dirty,
+                                'is-invalid':emailCon.invalid &&emailCon.touched
+                            }">
+                    </div>
+                    <small class="form-text text-danger"
+                        *ngIf="emailCon?.invalid &&emailCon?.touched">{{validUserEmail()}}</small>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="form-group   mb-3">
+                    <label for="password" class="form-label">Password</label>
+
+                    <div class="form-group-password">
+                        <input [type]="visiblePassword?'text':'password'" id="password" class="form-control"
+                            placeholder="Enter Your Password" formControlName="passwordCon" [ngClass]="{
+                            'is-valid':passwordCon.valid && passwordCon.dirty,
+                            'is-invalid':passwordCon.invalid && passwordCon.touched
+                        }" />
+                        <span class="eyeIcon" (click)="showPass()" *ngIf="!visiblePassword">
+                            <i class="fa fa-eye "></i>
+                        </span>
+                        <span class="eyeIcon " (click)="showPass()" *ngIf="visiblePassword">
+                            <i class="fa fa-eye-slash "></i>
+                        </span>
+                    </div>
+                    <small class="form-text text-danger"
+                        *ngIf="passwordCon.invalid && passwordCon.touched">{{validPassword()}}</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center loginfoot mt-4">
+            <div class="col-lg-6 col-md-12 col-sm-12 text-center ">
+                <!-- <button mat-raised-button color="warn" >تسجيل الدخول</button> -->
+                <app-button-loading [isLoading]="isLoading" [isDisabled]="loginFormGroup.invalid" (onSubmit)="submit()"
+                    title="Login">
+                </app-button-loading>
+                <!-- <button class="btn btn-primary" color="warn" type="submit">تسجيل الدخول</button> -->
+            </div>
+            <a class="col-lg-6 col-md-12 col-sm-12 mt-4" routerLink="/register" color="primary">انشاء حساب ؟</a>
+        </div>
+    </form>
+</div>

@@ -20,7 +20,7 @@ export class RegisterComponent {
   visibleConfirmPassword: boolean = false;
 
 
-  myFormGroup!: FormGroup;
+  registerFormGroup!: FormGroup;
 
   userNameCon!: FormControl;
   emailCon!: FormControl;
@@ -45,6 +45,7 @@ export class RegisterComponent {
 
   ngOnInit(): void {
     this.registerService.getAllUserStudent()
+    this.registerService.getAllUsers()
 
     this.initFormControl();
     this.createForm()
@@ -78,14 +79,12 @@ export class RegisterComponent {
   }
 
   createForm() {
-    this.myFormGroup = new FormGroup({
+    this.registerFormGroup = new FormGroup({
       userNameCon: this.userNameCon,
       emailCon: this.emailCon,
       passwordCon: this.passwordCon,
       confirmPasswordCon: this.confirmPasswordCon,
     },);
-
-
   }
 
 
