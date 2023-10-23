@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './service/login.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatePassword } from 'src/app/core/validations/validations';
 import { UserTypeEnum } from 'src/app/core/enums/user-type-enum';
@@ -7,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../service/auth.service';
 import { Router } from '@angular/router';
 import { UserStudentModel } from 'src/app/models/register-model';
+
+
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private toaster: ToastrService,
     private service: AuthService,
-    private router: Router,) {
+    private router: Router) {
     // this.loginService.getIsLoading().subscribe((isLoading: boolean) => {
     //   this.isLoading = isLoading;
     //   console.log(this.isLoading);
@@ -116,10 +117,10 @@ export class LoginComponent implements OnInit {
         }
         this.service.login(model).subscribe({
           next: (res) => {
-            console.log(res);
+            // console.log(res);
             this.toaster.success('login successfully');
             this.service.user.next(res);
-            this.router.navigate(['subject/subjects']);
+            this.router.navigateByUrl('/subject/subjects');
             this.isLoading = false;
           }
         })

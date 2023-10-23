@@ -39,6 +39,8 @@ export class AuthService {
   user = new Subject<any>()
   getRoleUser() {
     return this.crudService.get(this.crudService.BaseUrl, 'login/1').subscribe(data => {
+      console.log("From auth service: ", data);
+
       this.user.next(data);
     });
 

@@ -11,7 +11,7 @@
             <ul class="nav  navbar-default d-flex align-items-center "
                 [ngClass]="{ 'navbar-right':  ('dir'| translate)=='rtl'}">
                 <li *ngIf="userData?.role == 'doctor'" routerLinkActive="active"><a
-                        routerLink="/new-exam">{{'header.new-test' | translate}}</a></li>
+                        routerLink="doctor/new-Exam">{{'header.new-exam' | translate}}</a></li>
                 <li *ngIf="userData?.role == 'doctor'" routerLinkActive="active"><a
                         routerLink="/students">{{'header.student' | translate}}</a></li>
                 <li *ngIf="userData !== null" routerLinkActive="active"><a
