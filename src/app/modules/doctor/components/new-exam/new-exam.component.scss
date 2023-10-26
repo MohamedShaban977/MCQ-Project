@@ -36,3 +36,57 @@
 #multi-step-form {
     overflow-x: hidden;
 }
+
+::ng-deep[dir="rtl"] {
+    .form-group-password {
+        position: relative;
+
+        width: 100%;
+        input {
+            border-radius: 0 8px 8px 0;
+            width: 87%;
+        }
+
+        .eyeIcon {
+            width: 13%;
+            height: 100%;
+
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 16px;
+            background-color: #ddd;
+            border-radius: 8px 0 0 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    }
+}
+
+::ng-deep[dir="ltr"] {
+    .form-group-password {
+        position: relative;
+
+        width: 100%;
+        input {
+            border-radius: 8px 0 0 8px;
+            width: 87%;
+        }
+        .eyeIcon {
+            width: 13%;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 16px;
+            background-color: #ddd;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    }
+}

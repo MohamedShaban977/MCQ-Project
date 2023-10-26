@@ -13,39 +13,83 @@
     </div>
 
 
-    <form id="multi-step-form">
 
-        <div class="step step-1">
-            <!-- Step 1 form fields here -->
-            <h3>Step 1</h3>
-            <div class="mb-3">
-                <label for="field1" class="form-label">Field 1:</label>
-                <input type="text" class="form-control" id="field1" name="field1">
-            </div>
-            <button type="button" class="btn btn-primary next-step">Next</button>
-        </div>
-
-        <div class="step step-2">
-            <!-- Step 2 form fields here -->
-            <h3>Step 2</h3>
-            <div class="mb-3">
-                <label for="field2" class="form-label">Field 2:</label>
-                <input type="text" class="form-control" id="field2" name="field2">
-            </div>
-            <button type="button" class="btn btn-primary prev-step">Previous</button>
-            <button type="button" class="btn btn-primary next-step">Next</button>
-        </div>
-
-        <div class="step step-3">
-            <!-- Step 3 form fields here -->
-            <h3>Step 3</h3>
-            <div class="mb-3">
-                <label for="field3" class="form-label">Field 3:</label>
-                <input type="text" class="form-control" id="field3" name="field3">
-            </div>
-            <button type="button" class="btn btn-primary prev-step">Previous</button>
-            <button type="submit" class="btn btn-success">Submit</button>
-        </div>
-
-    </form>
 </div>
+
+<form [formGroup]="formGroup" class="form-group row">
+
+    <div class="step step-1" formArrayName="examList"> accordion-item
+        <!-- Step 1 form fields here -->
+        <h3>Step 1</h3>
+        <div class="mb-3" *ngFor="let examForm  of examList.controls; let i =index">
+
+            <div class="form-group row" [formGroup]=" examFG">
+
+
+
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="form-group   mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="form-group-password">
+                            <input type="text" id="password" class="form-control" placeholder="Enter Your Password"
+                                formControlName="passwordCon" />
+
+                            <label class="eyeIcon btn btn-danger" for="answerOne">
+                                <input class="form-check btn btn-danger" type="radio" name="answer" id="answerOne">
+                            </label>
+                        </div>
+                        <small class="form-text text-danger ms-3" *ngIf="true">is required</small>
+                    </div>
+                </div>
+
+                <label for="answerOne" class="form-label">answer One:</label>
+                <input type="text" formControlName="answerOne" class="form-control col-4" id="answerOne"
+                    name="answerOne" placeholder="answerOne">
+
+
+
+                <label for="answerTwo" class="form-label">answer Two:</label>
+                <input type="text" formControlName="answerTwo" class="form-control" id="answerTwo" name="answerOne"
+                    placeholder="answerOne">
+
+
+
+                <label for="answerThree" class="form-label">answer Three:</label>
+                <input type="text" formControlName="answerThree" class="form-control" id="answerThree" name="answerOne"
+                    placeholder="answerOne">
+
+
+
+                <label for="answerFour" class="form-label">answer Four:</label>
+                <input type="text" formControlName="answerFour" class="form-control" id="answerFour" name="answerOne"
+                    placeholder="answerOne">
+
+            </div>
+
+        </div>
+        <button type="button" class="btn btn-primary next-step">Next</button>
+    </div>
+
+    <div *ngIf="false" class="step step-2">
+        <!-- Step 2 form fields here -->
+        <h3>Step 2</h3>
+        <div class="mb-3">
+            <label for="field2" class="form-label">Field 2:</label>
+            <input type="text" class="form-control" id="field2" name="field2">
+        </div>
+        <button type="button" class="btn btn-primary prev-step">Previous</button>
+        <button type="button" class="btn btn-primary next-step">Next</button>
+    </div>
+
+    <div *ngIf="false" class="step step-3">
+        <!-- Step 3 form fields here -->
+        <h3>Step 3</h3>
+        <div class="mb-3">
+            <label for="field3" class="form-label">Field 3:</label>
+            <input type="text" class="form-control" id="field3" name="field3">
+        </div>
+        <button type="button" class="btn btn-primary prev-step">Previous</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+
+</form>
