@@ -1,95 +1,222 @@
 <div id="container" class="container mt-5">
-    <div class="progress px-1" style="height: 3px;">
-        <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
-            aria-valuemax="100"></div>
-    </div>
-    <div class="step-container d-flex justify-content-between">
-        <div class="step-circle" [ngClass]="{'bg-primary': currentStep == 1,'text-light':currentStep == 1}"
-            onclick="displayStep(1)">1</div>
-        <div class="step-circle" [ngClass]="{'bg-primary': currentStep == 2,'text-light':currentStep == 2}"
-            onclick="displayStep(2)">2</div>
-        <div class="step-circle" [ngClass]="{'bg-primary': currentStep == 3,'text-light':currentStep == 3}"
-            onclick="displayStep(3)">3</div>
-    </div>
+  <div class="progress px-1" style="height: 3px;">
+    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+      aria-valuemax="100"></div>
+  </div>
+  <div class="step-container d-flex justify-content-between">
+    <div class="step-circle" [ngClass]="{'bg-primary': currentStep == 1,'text-light':currentStep == 1}"
+      (onclick)="displayStep(1)">1</div>
 
+    <div class="step-circle" [ngClass]="{'bg-primary': currentStep == 2,'text-light':currentStep == 2}"
+      (onclick)="displayStep(2)">2</div>
+    <div class="step-circle" [ngClass]="{'bg-primary': currentStep == 3,'text-light':currentStep == 3}"
+      (onclick)="displayStep(3)">3</div>
+  </div>
 
 
 </div>
 
 <form [formGroup]="formGroup" class="form-group row">
 
-    <div class="step step-1" formArrayName="examList"> accordion-item
-        <!-- Step 1 form fields here -->
-        <h3>Step 1</h3>
-        <div class="mb-3" *ngFor="let examForm  of examList.controls; let i =index">
+  <div *ngIf="currentStep == 1" class="step step-1 container">
+    <!-- Step 1 form fields here -->
+    <h3>Step 1: Subject</h3>
+    <div class="mb-5 mt-5">
 
-            <div class="form-group row" [formGroup]=" examFG">
+      <div class="col-lg-5 col-md-12 col-sm-12">
+        <div class="form-group   mb-3">
+          <label for="nameSubject" class="form-label">Subject name</label>
+          <input type="text" id="nameSubject" class="form-control" placeholder="Enter Your Subject name"
+            formControlName="name" [ngClass]="{
+                        'is-valid':getControl('name').valid && getControl('name').dirty,
+                        'is-invalid':getControl('name').invalid && getControl('name').touched
+                    }" />
+          <small class="form-text invalid-feedback  ms-3"
+            *ngIf="getControl('name')?.invalid && getControl('name')?.touched ">
+            {{validSubjectName()}}</small>
+        </div>
+      </div>
+    </div>
 
 
-
-                <div class="col-lg-6 col-md-12 col-sm-12">
-                    <div class="form-group   mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <div class="form-group-password">
-                            <input type="text" id="password" class="form-control" placeholder="Enter Your Password"
-                                formControlName="passwordCon" />
-
-                            <label class="eyeIcon btn btn-danger" for="answerOne">
-                                <input class="form-check btn btn-danger" type="radio" name="answer" id="answerOne">
-                            </label>
-                        </div>
-                        <small class="form-text text-danger ms-3" *ngIf="true">is required</small>
-                    </div>
-                </div>
-
-                <label for="answerOne" class="form-label">answer One:</label>
-                <input type="text" formControlName="answerOne" class="form-control col-4" id="answerOne"
-                    name="answerOne" placeholder="answerOne">
+    <button type="button" class="btn btn-primary next-step" (click)="nextStep()"
+      [disabled]="(getControl('name').invalid)">Next</button>
+  </div>
 
 
 
-                <label for="answerTwo" class="form-label">answer Two:</label>
-                <input type="text" formControlName="answerTwo" class="form-control" id="answerTwo" name="answerOne"
-                    placeholder="answerOne">
 
 
+  <div *ngIf="currentStep == 2" class="step step-2" formArrayName="questions">
+    <!-- Step 2 form fields here -->
+    <h3>Step 2</h3>
+    <div class="mb-3" *ngFor="let examForm  of questions.controls; let i =index">
+      <div class="form-group card p-3" [formGroupName]="i">
+        <div class="row">
 
-                <label for="answerThree" class="form-label">answer Three:</label>
-                <input type="text" formControlName="answerThree" class="form-control" id="answerThree" name="answerOne"
-                    placeholder="answerOne">
+          <!--question-->
+          <div class="col-10">
+            <div class="form-group   mb-3">
+              <label for="question" class="form-label">Question</label>
+              <div class="form-group-password">
+                <textarea rows="5" type="text" id="question" class="form-control" placeholder="Enter Your question"
+                  formControlName="question" [ngClass]="{
+                  'is-invalid':getExamControl(i,'question').invalid && getExamControl(i,'question').touched}">
+                </textarea>
+              </div>
+              <small class="form-text text-danger ms-3"
+                *ngIf="getExamControl(i,'question')?.invalid &&getExamControl(i,'question')?.touched">{{validQuestion(i)}}</small>
+            </div>
+          </div>
 
+          <div class="col-2" [ngClass]="{
+            'text-start': ('dir' | translate)== 'rtl',
+            'text-end': ('dir' | translate)== 'ltr'
+          }">
+            <button type="button" class="btn btn-outline-primary" [disabled]="getControl('questions').invalid"
+              *ngIf="i==questions.controls.length-1 " (click)="addExam()">Add Quotation</button>
+            <button type="button" class="btn btn-outline-secondary" *ngIf="i!==questions.controls.length-1"
+              (click)="removeExam(i)">Remove
+              Quotation</button>
+          </div>
 
+          <!--answer One -->
+          <div class="col-lg-5 col-md-12 col-sm-12">
+            <div class="form-group   mb-3">
+              <label for="answerOne" class="form-label">Answer One</label>
+              <div class="form-group-password">
+                <input type="text" id="answerOne" class="form-control" placeholder="Enter Your Answer One"
+                  formControlName="answerOne" [ngClass]="{
+                        'is-invalid':getExamControl(i,'answerOne').invalid && getExamControl(i,'answerOne').touched
+                    }" />
+                <label class="eyeIcon btn" for="answerOneRed{{i}}">
+                  <input class="form-check " formControlName="correctAnswer" value="One" type="radio"
+                    id="answerOneRed{{i}}">
+                </label>
+              </div>
+              <small class="form-text text-danger ms-3"
+                *ngIf="getExamControl(i,'answerOne')?.invalid && getExamControl(i,'answerOne')?.touched">{{validAnswerOne(i)}}</small>
+            </div>
+          </div>
 
-                <label for="answerFour" class="form-label">answer Four:</label>
-                <input type="text" formControlName="answerFour" class="form-control" id="answerFour" name="answerOne"
-                    placeholder="answerOne">
+          <!--answer Two -->
+          <div class="col-lg-5 col-md-12 col-sm-12">
+            <div class="form-group   mb-3">
+              <label for="answerTwo" class="form-label">answer Two</label>
+              <div class="form-group-password">
+                <input type="text" id="answerTwo" class="form-control" placeholder="Enter Your answerTwo"
+                  formControlName="answerTwo" [ngClass]="{
+                  'is-invalid':getExamControl(i,'answerTwo').invalid && getExamControl(i,'answerTwo').touched
+              }" />
+                <label class="eyeIcon btn" for="answerTwoRed{{i}}">
+                  <input class="form-check " formControlName="correctAnswer" value="Two" type="radio"
+                    id="answerTwoRed{{i}}">
+                </label>
+              </div>
+              <small class="form-text text-danger ms-3"
+                *ngIf="getExamControl(i,'answerTwo')?.invalid && getExamControl(i,'answerTwo')?.touched">{{validAnswerTwo(i)}}</small>
+            </div>
+          </div>
+
+          <!--answer Three -->
+          <div class="col-lg-5 col-md-12 col-sm-12">
+            <div class="form-group   mb-3">
+              <label for="answerThree" class="form-label">Answer Three</label>
+              <div class="form-group-password">
+                <input type="text" id="answerThree" class="form-control" placeholder="Enter Your answer Three"
+                  formControlName="answerThree" [ngClass]="{
+                  'is-invalid':getExamControl(i,'answerThree').invalid && getExamControl(i,'answerThree').touched
+              }" />
+                <label class="eyeIcon btn " for="answerThreeRed{{i}}">
+                  <input class="form-check btn " formControlName="correctAnswer" value="Three" type="radio"
+                    id="answerThreeRed{{i}}">
+                </label>
+              </div>
+              <small class="form-text text-danger ms-3"
+                *ngIf="getExamControl(i,'answerThree')?.invalid && getExamControl(i,'answerThree')?.touched">{{validAnswerThree(i)}}</small>
+            </div>
+          </div>
+
+          <!--answer Four -->
+          <div class="col-lg-5 col-md-12 col-sm-12">
+            <div class="form-group   mb-3">
+              <label for="answerFour" class="form-label">answer Four</label>
+
+              <div class="form-group-password ">
+                <input type="text" id="answerFour" class="form-control" aria-describedby="inputGroupPrepend"
+                  placeholder="Enter Your answer Four" formControlName="answerFour" [ngClass]="{
+                  'is-invalid':getExamControl(i,'answerFour').invalid && getExamControl(i,'answerFour').touched
+              }" />
+
+                <label class="input-group-text eyeIcon  btn " for="answerFourRed{{i}}" id="inputGroupPrepend">
+                  <input class="form-check btn" formControlName="correctAnswer" value="Four" type="radio"
+                    id="answerFourRed{{i}}">
+                </label>
+              </div>
+              <small class="form-text text-danger ms-3"
+                *ngIf="getExamControl(i,'answerFour')?.invalid && getExamControl(i,'answerFour')?.touched">{{validAnswerFour(i)}}</small>
 
             </div>
 
+          </div>
+
+
+
         </div>
-        <button type="button" class="btn btn-primary next-step">Next</button>
+
+        <small class="form-text text-danger ms-3"
+          *ngIf="getExamControl(i,'correctAnswer')?.invalid">{{validCorrectAnswer(i)}}</small>
+      </div>
+
     </div>
 
-    <div *ngIf="false" class="step step-2">
-        <!-- Step 2 form fields here -->
-        <h3>Step 2</h3>
-        <div class="mb-3">
-            <label for="field2" class="form-label">Field 2:</label>
-            <input type="text" class="form-control" id="field2" name="field2">
+    <button type="button" class="btn btn-primary prev-step mx-5" (click)="previousStep()">Previous</button>
+    <button type="button" class="btn btn-primary next-step" [disabled]="getControl('questions').invalid"
+      (click)="nextStep()">Next</button>
+  </div>
+
+  <div *ngIf="currentStep == 3" class="step step-3">
+    <!-- Step 3 form fields here -->
+    <h3>Step 3</h3>
+    <div class="examBox">
+
+      <div class="examhead text-center">
+        <h2> Exam {{getControl('name').value}}</h2>
+      </div>
+      <ng-container *ngFor="let examForm  of questions.controls; let i =index">
+
+        <div class="quizBox">
+          <strong class="text-danger"> Question #{{i+1}} </strong>
+
+          <div class="row">
+            <div class="col-12">
+              {{ getExamControl(i,'question').value || '--'}}
+            </div>
+            <div class="col-lg-5 col-md-12 col-sm-12">
+              A. {{ getExamControl(i,'answerOne').value}}
+              <div class="row">
+              </div>
+              <div class="col-lg-5 col-md-12 col-sm-12">
+                B. {{ getExamControl(i,'answerTwo').value}}
+              </div>
+              <div class="col-lg-5 col-md-12 col-sm-12">
+                C. {{ getExamControl(i,'answerThree').value}}
+              </div>
+              <div class="col-lg-5 col-md-12 col-sm-12">
+                D. {{ getExamControl(i,'answerFour').value}}
+              </div>
+              <div class="col-12">
+                <span class="text-success"> Correct Answer: {{handleCorrectAnswer(
+                  getExamControl(i,'correctAnswer').value)}}</span>
+              </div>
+            </div>
+            <hr>
+          </div>
         </div>
-        <button type="button" class="btn btn-primary prev-step">Previous</button>
-        <button type="button" class="btn btn-primary next-step">Next</button>
+      </ng-container>
     </div>
 
-    <div *ngIf="false" class="step step-3">
-        <!-- Step 3 form fields here -->
-        <h3>Step 3</h3>
-        <div class="mb-3">
-            <label for="field3" class="form-label">Field 3:</label>
-            <input type="text" class="form-control" id="field3" name="field3">
-        </div>
-        <button type="button" class="btn btn-primary prev-step">Previous</button>
-        <button type="submit" class="btn btn-success">Submit</button>
-    </div>
-
+    <button type="button" class="btn btn-primary prev-step" (click)="previousStep()">Previous</button>
+    <button type="submit" class="btn btn-success" (click)="submit()">Submit</button>
+  </div>
 </form>

@@ -4,8 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthRoutingModule } from './auth-routing.module';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
+
 
 
 
@@ -18,8 +17,6 @@ import { InputTextModule } from 'primeng/inputtext';
     SharedModule,
     CommonModule,
     AuthRoutingModule,
-    ButtonModule,
-    InputTextModule,
   ]
 })
 export class AuthModule { }

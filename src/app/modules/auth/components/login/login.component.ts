@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit {
             // console.log(res);
             this.toaster.success('login successfully');
             this.service.user.next(res);
-            this.router.navigateByUrl('/subject/subjects');
+            this.router.navigate(['/subject/subjects']);
             this.isLoading = false;
           }
         })

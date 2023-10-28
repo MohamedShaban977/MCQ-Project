@@ -24,10 +24,6 @@ import { InputPasswordComponent } from './components/input-password/input-passwo
     TranslateModule,
     HttpClientModule,
     RouterModule,
-
-
-
-
   ],
   exports: [
     TranslateModule,
